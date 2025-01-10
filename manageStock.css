@@ -1,0 +1,125 @@
+body {
+    height: auto;
+}
+
+.productsContainer {
+    border-radius: 5px;
+    margin-top: 0px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba( 255, 255, 255, 0.5);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 1);
+    min-height: 650px;
+    max-height: 650px;
+}
+
+.header {
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px 4px 0 0;
+    height: 80px;
+    margin: 0;
+    width: 100%;
+    background-color: rgba(127, 7, 8, 1);
+    padding: 0;
+    color: white;
+}
+
+.body {
+    margin: 0;
+    padding: 0;
+    background-color: rgba( 255, 255, 255, 0.5);
+    height: 570px;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-bottom: rgba(127, 7, 8, 1) solid 10px;
+    border-radius: 0 0 4px 4px;
+}
+
+.body::-webkit-scrollbar {
+    width: 10px;
+}
+
+.body::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: #7773;
+}
+
+.body::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #888;
+}
+
+.product {
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 1);
+    color: white;
+    border-radius: 5px;
+    width: 98%;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.buttons, .infos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+    margin: 4% 3% 0 3%;
+    text-align: center;
+    font-size: 17px;
+}
+
+.pname {
+    width: 35%;
+}
+
+.pprice {
+    width: 30%;
+}
+
+.pstock {
+    width: 35%;
+}
+
+.pbutton {
+    width: 40%;
+}
+
+button {
+    background-color: #7f0708;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    font-size: 11px;
+}
+
+.welcomeMessage {
+    align-self: flex-start;
+    margin-left: 10%;
+    margin-top: 20px;
+}
+
+@media (max-width: 400px) {
+
+    #products-container {
+        width: 90%;
+    }
+
+    #products-container h1 {
+        font-size: 25px;
+    }
+}
