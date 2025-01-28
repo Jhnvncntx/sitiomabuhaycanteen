@@ -23,12 +23,6 @@ document.getElementById('promptButton').addEventListener('click', () => {
     window.location.href = 'register.html'
 });
 
-//LOADING DISPLAY
-// submitButton.addEventListener('click', function(event) {
-//     // You can add any logic here for when the submit button is clicked
-//     loadingDisplay.classList.remove("hidden");
-// });
-
 //FUNCTION TO REGISTER USER
 document.getElementById('registerForm').addEventListener('submit', async function(event) {
     event.preventDefault();
