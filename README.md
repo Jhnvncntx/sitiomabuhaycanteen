@@ -125,3 +125,6 @@ Comming soon
     - Added prompts when updating orders.
     - Minor error handling.
 NOTE: Dapat naka enable yung mga options for notification para mag notify sa customer ang order update.
+
+02-25-25 Update
+- Added confirmation notification when logging in.
