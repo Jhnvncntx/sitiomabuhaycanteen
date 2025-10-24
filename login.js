@@ -59,3 +59,97 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (permission === 'granted') {
                         console.log('Notification permission granted.');
                         const registration = await navigator.serviceWorker.ready;
+
+                        try {
+                            subscription = await registration.pushManager.subscribe({
+                                userVisibleOnly: true,
+                                applicationServerKey: 'BGym_JA2SQCChHM3O2d8h9R0pRc7esVgRUCKMqn5a3z6-4wEIAZjW8OE3myYAEBSe71beL86awdFBI5BktH8U5c'
+                            });
+                        } catch (subError) {
+                            console.warn('Push subscription failed:', subError);
+                        }
+                    } else if (permission === 'denied') {
+                        console.warn('User denied notifications.');
+                    } else {
+                        console.log('Notification permission dismissed or ignored.');
+                    }
+                }
+
+                // Send login request to backend
+                const response = await fetch('https://mshssm-canteen.onrender.com/api/login/customer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ lrn, password, subscription })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    console.log('Customer Login successful:', result);
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('firstName', result.firstName);
+                    localStorage.setItem('lastName', result.lastName);
+                    window.location.href = 'order.html';
+                } else {
+                    messageDiv.textContent = 'Error: ' + result.error;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                messageDiv.textContent = 'An error occurred. Please try again later.';
+            } finally {
+                loadingDisplay?.classList.add("hidden");
+            }
+        });
+    }
+
+    //##### STAFF LOGIN #####
+    const staffForm = document.getElementById('staffLoginForm');
+    if (staffForm) {
+        staffForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const loadingDisplay = document.getElementById("loading");
+            loadingDisplay?.classList.remove("hidden");
+
+            const mobileNumber = document.getElementById('staffMobileNumber').value.trim();
+            const password = document.getElementById('staffPassword').value.trim();
+            const messageDiv = document.getElementById('staffMessage');
+
+            messageDiv.textContent = '';
+
+            if (!mobileNumber || !password) {
+                messageDiv.textContent = 'Please fill in all fields.';
+                loadingDisplay?.classList.add("hidden");
+                return;
+            }
+
+            try {
+                const response = await fetch('https://mshssm-canteen.onrender.com/api/login/staff', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mobileNumber, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    console.log('Staff Login successful:', result);
+                    messageDiv.textContent = 'Login successful!';
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('firstName', result.firstName);
+                    localStorage.setItem('lastName', result.lastName);
+                    window.location.href = 'staff.html';
+                } else {
+                    messageDiv.textContent = 'Error: ' + result.error;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                messageDiv.textContent = 'An error occurred. Please try again later.';
+            } finally {
+                loadingDisplay?.classList.add("hidden");
+            }
+        });
+    }
+
+});
