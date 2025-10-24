@@ -4,9 +4,9 @@ const ptoggle = document.getElementById('ptoggle');
 const submitButton = document.getElementById('submitButton');
 
 ptoggle.onclick = function(){
-    if(customerPassword.type == "password"){
+    if(customerPassword.type === "password"){
         customerPassword.type = "text";
-    }else{
+    } else {
         customerPassword.type = "password";
     }
 }
@@ -48,14 +48,28 @@ document.getElementById('customerLoginForm').addEventListener('submit', async fu
 
     try {
         let subscription = null;
-        
+
         // Check if push notifications are supported
         if ('serviceWorker' in navigator && 'PushManager' in window) {
             const registration = await navigator.serviceWorker.ready;
-            subscription = await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: 'BGym_JA2SQCChHM3O2d8h9R0pRc7esVgRUCKMqn5a3z6-4wEIAZjW8OE3myYAEBSe71beL86awdFBI5BktH8U5c'
-            });
+
+            // Ask for permission first — ensures Chrome prompts the user
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+                console.log('Notification permission granted.');
+                try {
+                    subscription = await registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: 'BGym_JA2SQCChHM3O2d8h9R0pRc7esVgRUCKMqn5a3z6-4wEIAZjW8OE3myYAEBSe71beL86awdFBI5BktH8U5c'
+                    });
+                } catch (subError) {
+                    console.warn('Push subscription failed:', subError);
+                }
+            } else if (permission === 'denied') {
+                console.warn('User denied notifications.');
+            } else {
+                console.log('Notification permission dismissed.');
+            }
         }
 
         const response = await fetch('https://mshssm-canteen.onrender.com/api/login/customer', {
