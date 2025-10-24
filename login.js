@@ -37,7 +37,7 @@ document.getElementById('customerLoginForm').addEventListener('submit', async fu
                     const subscription = await registration.pushManager.subscribe({
                         userVisibleOnly: true,
                         applicationServerKey: urlBase64ToUint8Array(
-                            'BBA0PUIYyE4oXmyFq6v2xB2hCuxxxxxxxxYOUR_VAPID_PUBLIC_KEY_HERExxxxxxxx'
+                            'BGym_JA2SQCChHM3O2d8h9R0pRc7esVgRUCKMqn5a3z6-4wEIAZjW8OE3myYAEBSe71beL86awdFBI5BktH8U5c'
                         )
                     });
 
@@ -77,3 +77,4 @@ function urlBase64ToUint8Array(base64String) {
     const rawData = window.atob(base64);
     return Uint8Array.from([...rawData].map(char => char.charCodeAt(0)));
 }
+
